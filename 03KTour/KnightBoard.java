@@ -1,161 +1,95 @@
-public class KnightBoard{
-    int[][] board;
-    public KnightBoard(int r,int c){
-	board=new int[r][c];
-    }
-    public boolean move(int m,int a,int b,int c){
-	if(m==0){
-	    if(a-2>0&&b-1>0){
-		board[a-2][b-1]=c;
-		board[a][b]=0;
-		return true;
-	    }
+
+public class KnightBoard {
+	int[][] board;
+
+	public KnightBoard(int r, int c) {
+		board = new int[r][c];
 	}
-	if(m==1){
-	    if(a-2>0&&b+1<board[0].length){
-		board[a-2][b+1]=c;
-		board[a][b]=0;
-		return true;
-	    }
+
+	public boolean move(int m, int a, int b, int c) {
+		if (m == 0 && a - 2 >= 0 && b - 1 >= 0 && board[a - 2][b - 1] == 0) {
+			board[a - 2][b - 1] = c;
+			return solver(a - 2, b - 1, c + 1);
+
+		}
+		if (m == 1 && a - 2 >= 0 && b + 1 < board[0].length && board[a - 2][b + 1] == 0) {
+			board[a - 2][b + 1] = c;
+			return solver(a - 2, b + 1, c + 1);
+
+		}
+		if (m == 2 && a + 1 < board.length && b + 2 < board[0].length && board[a + 1][b + 2] == 0) {
+			board[a + 1][b + 2] = c;
+			return solver(a + 1, b + 2, c + 1);
+
+		}
+		if (m == 3 && a + 1 < board.length && b - 2 >= 0 && board[a + 1][b - 2] == 0) {
+			board[a + 1][b - 2] = c;
+			return solver(a + 1, b - 2, c + 1);
+
+		}
+		if (m == 4 && a + 2 < board.length && b - 1 >= 0 && board[a + 2][b - 1] == 0) {
+			board[a + 2][b - 1] = c;
+			return solver(a + 2, b - 1, c + 1);
+
+		}
+		if (m == 5 && a + 2 < board.length && b + 1 < board[0].length && board[a + 2][b + 1] == 0) {
+			board[a + 2][b + 1] = c;
+			return solver(a + 2, b + 1, c + 1);
+
+		}
+		if (m == 6 && a - 1 >= 0 && b + 2 < board[0].length && board[a - 1][b + 2] == 0) {
+			board[a - 1][b + 2] = c;
+			return solver(a - 1, b + 2, c + 1);
+
+		}
+		if (m == 7 && a - 1 >= 0 && b - 2 >= 0 && board[a - 1][b - 2] == 0) {
+			board[a - 1][b - 2] = c;
+			return solver(a - 1, b - 2, c + 1);
+		}
+		return false;
 	}
-	if(m==2){
-	    if(a+1<board.length&&b+2<board[0].length){
-		board[a+1][b+2]=c;
-		board[a][b]=0;
-		return true;
-	    }
-	}
-	if(m==3){
-	    if(a+1<board.length&&b-2>0){
-		board[a+1][b-2]=c;
-		board[a][b]=0;
-		return true;
-	    }
-	}
-	if(m==4){
-	    if(a+2<board.length&&b-1>0){
-		board[a+2][b-1]=c;
-		board[a][b]=0;
-		return true;
-	    }
-	}
-	if(m==5){
-	    if(a+2<board.length&&b+1<board[0].length){
-		board[a+2][b+1]=c;
-		board[a][b]=0;
-		return true;
-	    }
-	}
-	if(m==6){
-	    if(a-1>0&&b+2<board[0].length){
-		board[a-1][b+2]=c;
-		board[a][b]=0;
-		return true;
-	    }
-	}
-	if(m==7){
-	    if(a+1<board.length&&b+2<board[0].length){
-		board[a+1][b+2]=c;
-		board[a][b]=0;
-		return true;
-	    }
-	}
-	return false;
-    }
-public boolean rmove(int m,int a,int b,int c){
-	if(m==0){
-	    if(a+2<board.length&&b+1<board[0].length){
-		board[a+2][b+1]=c;
-		board[a][b]=0;
-		return true;
-	    }
-	}
-	if(m==1){
-	    if(a+2<board.length&&b-1>0){
-		board[a+2][b-1]=c;
-		board[a][b]=0;
-		return true;
-	    }
-	}
-	if(m==2){
-	    if(a-1>0&&b-2>0){
-		board[a-1][b-2]=c;
-		board[a][b]=0;
-		return true;
-	    }
-	}
-	if(m==3){
-	    if(a+1<board.length&&b-2>0){
-		board[a+1][b-2]=c;
-		board[a][b]=0;
-		return true;
-	    }
-	}
-	if(m==4){
-	    if(a+2<board.length&&b-1>0){
-		board[a+2][b-1]=c;
-		board[a][b]=0;
-		return true;
-	    }
-	}
-	if(m==5){
-	    if(a+2<board.length&&b+1<board[0].length){
-		board[a+2][b+1]=c;
-		board[a][b]=0;
-		return true;
-	    }
-	}
-	if(m==6){
-	    if(a-1>0&&b+2<board[0].length){
-		board[a-1][b+2]=c;
-		board[a][b]=0;
-		return true;
-	    }
-	}
-	if(m==7){
-	    if(a+1<board.length&&b+2<board[0].length){
-		board[a+1][b+2]=c;
-		board[a][b]=0;
-		return true;
-	    }
-	}
-	return false;
-    }
+
 	public void print() {
 		String s = "";
 		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board.length; y++) {
-				if (board[x][y] == 1) {
-					s += " Q ";
-				} else {
-					s += " _ ";
+			for (int y = 0; y < board[0].length; y++) {
+				s += "  " + board[x][y] + "  ";
+			}
+			System.out.println(s);
+			s = "";
+		}
+
+	}
+
+	public void printSolution() {
+		solve();
+		print();
+	}
+
+	public boolean solve() {
+		for (int x = 0; x < board.length; x++) {
+			for (int y = 0; y < board[0].length; y++) {
+				board[x][y] = 1;
+				if (solver(x, y, 2)) {
+					return true;
 				}
+				board[x][y] = 0;
 			}
-			System.out.println(s);
-			s = "";
 		}
-
+		return false;
 	}
-	public void print() {
-		String s = "";
-		for (int x = 0; x < board.length; x++) {
-			for (int y = 0; y < board.length; y++) {
-			    s+=board[x][y];
+
+	public boolean solver(int x, int y, int c) {
+		if (c > board.length * board[0].length) {
+			return true;
+		}
+		for (int m = 0; m < 8; m++) {
+			if (move(m, x, y, c)) {
+				return true;
 			}
-			System.out.println(s);
-			s = "";
 		}
-
+		board[x][y] = 0;
+		return false;
 	}
-    public void printSolution(){
-	solve();
-	print();
-    }
-    public boolean solve(){
-	return solver(1);
-    }
-    public boolean solver(int c){
-	
-    }
 
 }
