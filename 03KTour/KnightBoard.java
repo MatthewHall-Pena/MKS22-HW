@@ -53,7 +53,11 @@ public class KnightBoard {
 		String s = "";
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[0].length; y++) {
-				s += "  " + board[x][y] + "  ";
+				if (board.length * board[0].length > 10 && board[x][y] < 10) {
+					s += " ";
+				}
+				s += " ";
+				s += board[x][y] + " ";
 			}
 			System.out.println(s);
 			s = "";
@@ -91,5 +95,4 @@ public class KnightBoard {
 		board[x][y] = 0;
 		return false;
 	}
-
 }
