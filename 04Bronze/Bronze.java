@@ -3,9 +3,9 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Bronze {
-	public static boolean stomp(int r, int c, int diff, int[][] elev) {
-		if (r + 2 < elev.length || c + 2 < elev[0].length || diff <= 0) {
-			return false;
+	public static int[][] stomp(int r, int c, int diff, int[][] elev) {
+		if (r + 3 > elev.length || c + 3 > elev[0].length || diff <= 0) {
+			return elev;
 		}
 		int max = big(r, c, elev) - diff;
 		for (int x = r; x < r + 3; x++) {
@@ -15,7 +15,7 @@ public class Bronze {
 				}
 			}
 		}
-		return true;
+		return elev;
 	}
 
 	public static int big(int r, int c, int[][] elev) {
@@ -38,14 +38,18 @@ public class Bronze {
 		}
 		int[][] elev = new int[s.nextInt()][s.nextInt()];
 		int lake = s.nextInt();
-		for (int x = s.nextInt(); x > 0; x--) {
-			for (int y = 0; y < 3; y++) {
-				stomp(s.nextInt(), s.nextInt(), s.nextInt(), elev);
+		int n = s.nextInt();
+		for (int x = 0; x < elev.length; x++) {
+			for (int y = 0; y < elev[0].length; y++) {
+				elev[x][y] = s.nextInt();
 			}
+		}
+		for (int x = n; x > 0; x--) {
+			elev = stomp(s.nextInt() - 1, s.nextInt() - 1, s.nextInt(), elev);
 		}
 		for (int x = 0; x < elev.length; x++) {
 			for (int y = 0; y < elev[0].length; y++) {
-				elev[x][y] -= lake;
+				elev[x][y] = lake - elev[x][y];
 				if (elev[x][y] < 0) {
 					elev[x][y] = 0;
 				}
