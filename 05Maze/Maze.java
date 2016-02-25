@@ -21,20 +21,31 @@ public class Maze{
     */
     public Maze(String filename, boolean ani){
         //COMPLETE CONSTRUCTOR
-	Scanner s=new Scanner(new File(filename));
+	Scanner s=null;
+	try{
+
+	s=new Scanner(new File(filename));
+	}
+	catch(FileNotFoundException e){
+	}
 	int x=0;
 	int y=1;
-	int z=s.nextLine.length();
-	while(s.hasNextLine()){	    
-	    s.nextLine()
+	int z=s.nextLine().length();
+	while(s.hasNextLine()){	
+	    s.nextLine();
 	    y++;
 	}
+	try{
 	s=new Scanner(new File(filename));
+	}
+	catch(FileNotFoundException e){
+	}
 	maze=new char[z][y];
-	while(s.hasNextLine()){	    
+	while(s.hasNextLine()){	
 	    maze[x]=s.nextLine().toCharArray();
 	    x++;
 	}
+	System.out.println(maze[0][0]);
     }
 
 
@@ -135,7 +146,16 @@ public class Maze{
         catch (InterruptedException e) {
         }
     }
-
+    public static void main(String[]args){
+	Maze m =new Maze("data1.dat",false);
+	for(int x=0;x<m.maze.length;x++){
+	    for(int y=0;y<m.maze[0].length;y++){
+		System.out.println(m.maze[x][y]);
+	    }
+	}
+	System.out.println(m.toString());
+	
+    }
     
 
     //END FREE STUFF
