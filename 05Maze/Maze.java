@@ -31,8 +31,7 @@ public class Maze{
 	int x=0;
 	int y=1;
 	int z=s.nextLine().length();
-	while(s.hasNextLine()){	
-	    s.nextLine();
+	while(s.hasNextLine()&&s.nextLine().length()==z){
 	    y++;
 	}
 	try{
@@ -40,12 +39,12 @@ public class Maze{
 	}
 	catch(FileNotFoundException e){
 	}
-	maze=new char[z][y];
-	while(s.hasNextLine()){	
+	maze=new char[y][z];
+	while(y>0){	
 	    maze[x]=s.nextLine().toCharArray();
 	    x++;
+	    y--;
 	}
-	System.out.println(maze[0][0]);
     }
 
 
@@ -83,7 +82,14 @@ public class Maze{
             System.out.println(this);
             wait(20);
         }
-
+	if(maze[x][y]=='.'){
+	}
+	maze[x][y]='.';
+	for(int a=-1;a<2;a++){
+	    for(int b=-1;b<2;b++){
+		if(solve(x+a,y+b))
+	    }
+	}
         //COMPLETE SOLVE
 
         return false; //so it compiles
@@ -148,11 +154,6 @@ public class Maze{
     }
     public static void main(String[]args){
 	Maze m =new Maze("data1.dat",false);
-	for(int x=0;x<m.maze.length;x++){
-	    for(int y=0;y<m.maze[0].length;y++){
-		System.out.println(m.maze[x][y]);
-	    }
-	}
 	System.out.println(m.toString());
 	
     }
