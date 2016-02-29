@@ -23,6 +23,7 @@ public class Maze {
 	public Maze(String filename, boolean ani) {
 		startx = 0;
 		starty = 0;
+		animate=ani;
 		// COMPLETE CONSTRUCTOR
 		Scanner s = null;
 		try {
@@ -90,22 +91,22 @@ public class Maze {
 			System.out.println(this);
 			wait(20);
 		}
-		if (x < 0 || y < 0 || x >= maze.length || y >= maze[0].length || maze[x][y] == '.' || maze[x][y] == '#') {
+		if (x < 0 || y < 0 || x >= maze.length || y >= maze[0].length || maze[x][y] == '.' || maze[x][y] == '#'|| maze[x][y] == '@') {
 			return false;
 		}
 		if (maze[x][y] == 'E') {
 			return true;
 		}
-		maze[x][y] = '.';
+		maze[x][y] = '@';
 		for (int a = -1; a < 2; a++) {
 			for (int b = -1; b < 2; b++) {
 				if (a != b && a != -b && solve(x + a, y + b)) {
-					maze[x][y] = '@';
 					return true;
 				}
 
 			}
 		}
+		maze[x][y]='.';
 		// COMPLETE SOLVE
 
 		return false; // so it compiles
@@ -119,8 +120,8 @@ public class Maze {
 
 	@Override
 	public String toString() {
-		int maxx = maze.length;
-		int maxy = maze[0].length;
+		int maxx = maze[0].length;
+		int maxy = maze.length;
 		String ans = "";
 
 		if (animate) {
@@ -132,7 +133,7 @@ public class Maze {
 			if (i % maxx == 0 && i != 0) {
 				ans += "\n";
 			}
-			char c = maze[i % maxx][i / maxx];
+			char c = maze[i / maxy][i % maxy];
 			if (c == '#') {
 				ans += color(38, 47) + c;
 			} else {
