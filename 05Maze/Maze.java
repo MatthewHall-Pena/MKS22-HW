@@ -126,19 +126,19 @@ public class Maze {
 
 		if (animate) {
 
-			ans = "Solving a maze that is " + maxx + " by " + maxy + "\n";
+			ans = "Solving a maze that is " + maxy + " by " + maxx + "\n";
 
 		}
-		for (int i = 0; i < maxx * maxy; i++) {
-			if (i % maxx == 0 && i != 0) {
-				ans += "\n";
-			}
-			char c = maze[i / maxy][i % maxy];
+		for (int i = 0; i < maxy; i++) {
+		    ans+="\n";
+		    for(int h=0;h<maxx;h++){
+			char c = maze[i][h];
 			if (c == '#') {
 				ans += color(38, 47) + c;
 			} else {
 				ans += color(33, 40) + c;
 			}
+		    }
 		}
 		return HIDE_CURSOR + go(0, 0) + ans + "\n" + SHOW_CURSOR + color(37, 40);
 	}
