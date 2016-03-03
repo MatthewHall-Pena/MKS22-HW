@@ -72,6 +72,6 @@ public class Silver {
 				}
 			}
 		}
-		System.out.println(solve(map, sec, s.nextInt() - 1, s.nextInt() - 1, s.nextInt() - 1, s.nextInt() - 1));
+		System.out.println(solve(map, sec, s.nextInt() - 1, s.nextInt() - 1, s.nextInt() - 1, s.nextInt() - 1)+",7,Hall-Pena,Matthew");
 	}
 }
