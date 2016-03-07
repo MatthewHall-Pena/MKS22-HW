@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.Random;
 
 public class Sorts {
 	public static void printArray(int[] data) {
@@ -18,130 +18,124 @@ public class Sorts {
 		for (int x = 0; x < data.length; x++) {
 
 			for (int y = x; y > 0; y--) {
-				if (data[y] < data[y-1]) {
+				if (data[y] < data[y - 1]) {
 					num = data[y];
-					data[y] = data[y-1];
-					data[y-1]=num;
+					data[y] = data[y - 1];
+					data[y - 1] = num;
 				}
 			}
-			
+
 		}
 	}
 
 	public static void insertionSort(int[] data) {
 		int num;
-		for (int y = 0; y < data.length-1; y++) {
+		for (int y = 0; y < data.length - 1; y++) {
 
-			while(data[y] > data[y+1]) {
-					num = data[y];
-					data[y] = data[y+1];
-					data[y+1]=num;
-		
+			while (data[y] > data[y + 1]) {
+				num = data[y];
+				data[y] = data[y + 1];
+				data[y + 1] = num;
+
 			}
-			
+
 		}
 		printArray(data);
 
 	}
-        public static void bubbleSort(int[] data) {
-	    int num;
-	    int  swap=0;
+
+	public static void bubbleSort(int[] data) {
+		int num;
+		int swap = 0;
 		for (int x = 0; x < data.length; x++) {
 
-			for (int y = 0; y < data.length-x-1; y++) {
-				if (data[y] > data[y+1]) {
+			for (int y = 0; y < data.length - x - 1; y++) {
+				if (data[y] > data[y + 1]) {
 					num = data[y];
-					data[y] = data[y+1];
-					data[y+1]=num;
-					swap+=1;
+					data[y] = data[y + 1];
+					data[y + 1] = num;
+					swap += 1;
 				}
 			}
-			if (swap==0){
-			    x=data.length;
+			if (swap == 0) {
+				x = data.length;
 			}
-			swap=0;
-			
+			swap = 0;
+
 		}
 
 	}
-	private static int addIndex(int n, int[] data) {
-		int place0 = 0;
-		int place1 = data.length;
-		double mid;
-		while (true) {
-			mid = (place1 - place0) / 2.;
-			if (place0 == place1) {
-				return place0;
-			}
-			if (data[place0] < n) {
-				place0 += mid + .5;
-			} else if (place0 - mid > 0 && data[(int) (place0 - mid)] > n) {
-				place0 -= mid;
-			} else if (place1 + mid < data.length && data[(int) (place1 + mid)] < n) {
-				place1 += mid;
+
+	public static void fillRandom(int[] data) {
+		Random r = new Random();
+		for (int x = 0; x < data.length; x++) {
+			data[x] = r.nextInt();
+		}
+	}
+
+	public static void swap(int[] data, int index, int nIndex) {
+		int num = data[index];
+		data[index] = data[nIndex];
+		data[nIndex] = num;
+	}
+
+	public static int[] merge(int[] data, int[] data2) {
+		int[] ints = new int[data.length + data2.length];
+		int a = 0;
+		int b = 0;
+		for (int x = 0; x < ints.length; x++) {
+			if (b >= data2.length || (a < data.length && data[a] < data2[b])) {
+				ints[x] = data[a];
+				a++;
 			} else {
-				place1 -= mid;
+				ints[x] = data2[b];
+				b++;
 			}
+		}
+		return ints;
+	}
+
+	public static void merge(int[] data, int start, int end, int end2) {
+		int[] ints = new int[end - start];
+		int[] ints2 = new int[end2 - end];
+		int y = 0;
+		for (int x = start; x < end; x++) {
+			ints[y] = data[x];
+			y++;
+		}
+		y = 0;
+		for (int x = end; x < end2; x++) {
+			ints2[y] = data[x];
+			y++;
+		}
+		ints = merge(ints, ints2);
+		y = 0;
+		for (int x = start; x < end2; x++) {
+			data[x] = ints[y];
+			y++;
 		}
 	}
 
-	private static int[] add(int index, int element, int[] data) {
-		int[] ndata = new int[data.length + 1];
-		for (int x = 0; x < index; x++) {
-			ndata[x] = data[x];
+	public static void mergeSort(int[] data) {
+		merger(data, 0);
+
+	}
+
+	private static void merger(int[] data, int power) {
+		int pow2 = (int) Math.pow(2, power);
+		if (pow2 * 2 < data.length) {
+			for (int x = 0; x < data.length - (2 * pow2) + 1; x += 2 * pow2) {
+				merge(data, x, x + pow2, x + 2 * pow2);
+			}
+			merger(data, power + 1);
 		}
-		ndata[index] = element;
-		for (int x = index; x < data.length; x++) {
-			ndata[x + 1] = data[x];
+		for (int x = pow2; x + pow2 / 2 < data.length + 1; x += pow2 / 2) {
+			merge(data, 0, x, x + pow2 / 2);
+			if (pow2 / 2 == 0) {
+				x = data.length + 1;
+			}
 		}
-		return ndata;
+
 	}
-    public static void fillRandom(int[] data){
-	Random r=new Random();
-	for(int x = 0; x < data.length; x++){
-	    data[x]=r.nextInt();
-	}
-    }
-    public static void swap(int[] data,int index,int nIndex){
-	int num = data[index];
-	data[index] = data[nIndex];
-	data[nIndex]=num;
-    }
-    int[] sort;
-    public int[] merge(int[] data,int[] data2){
-	int[] ints=new int[data.length+data2.length];
-	int a=0;
-	int b=0;
-	for(int x=0;x<ints.length;x++){
-	    if (a<data.length&&data[a]<data2[b]){
-		ints[x]=data[a];
-		a++;
-	    }
-	    else{
-		ints[x]=data2[b];
-		b++;
-	    }
-	}
-	return ints;
-    }
-    /*  public void merge(int[] data,int start,int end,int start2,int end2){
-	int[] ints=new int[end-start+1];
-	int[] ints2=new int[end2-start2+1];
-	int y=0;
-	for(int x=start;x<end+1;x++){
-	    ints[y]=data[x];
-	    y++;
-	}
-	y=0;
-	for(int x=start2;x<end2+1;x++){
-	    ints2[y]=data[x];
-	    y++;
-	}
-	for(int 
-	}*/
-    
-    public boolean mergeSort(int[] data){
-	return merger(data,
-    }
 
 }
