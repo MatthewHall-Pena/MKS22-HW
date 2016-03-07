@@ -116,7 +116,7 @@ public class Sorts {
 		}
 	}
 
-	public static void mergeSort(int[] data) {
+	public static void mergesort(int[] data) {
 		merger(data, 0);
 
 	}
