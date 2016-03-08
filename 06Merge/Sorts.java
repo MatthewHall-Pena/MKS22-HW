@@ -1,5 +1,5 @@
 import java.util.Random;
-
+import java.util.Arrays; 
 public class Sorts {
 	public static void printArray(int[] data) {
 		String s = "[ ";
@@ -140,5 +140,15 @@ public class Sorts {
 		}
 
 	}
+    public static void main(String[]args){
+	int[] data =new int[Integer.MAX_VALUE/25];
+	fillRandom(data);
+	if(args[0]=="1"){
+	    mergesort(data);
+	}
+	if(args[0]=="2"){
+	    Arrays.sort(data);
+	}
+    }
 
 }
