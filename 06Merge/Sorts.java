@@ -140,7 +140,7 @@ public class Sorts {
 		}
 
 	}
-    public static void main(String[]args){
+   /* public static void main(String[]args){
 	int[] data =new int[Integer.MAX_VALUE/25];
 	fillRandom(data);
 	if(args[0]=="1"){
@@ -149,6 +149,6 @@ public class Sorts {
 	if(args[0]=="2"){
 	    Arrays.sort(data);
 	}
-    }
+    }*/
 
 }
