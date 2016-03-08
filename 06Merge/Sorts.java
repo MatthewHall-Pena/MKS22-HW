@@ -12,6 +12,9 @@ public class Sorts {
 		s += "]";
 		System.out.println(s);
 	}
+    public static String name(){
+	return "7,Hall-Pena,Matthew"; 
+    }
 
 	public static void selectionSort(int[] data) {
 		int num;
