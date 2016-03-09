@@ -1,6 +1,10 @@
 import java.util.Random;
 
 public class Quick {
+	public static String name(){
+
+		return "7,Hall-Pena,Matthew"; 
+    	}
 	private static int partition(int[] data, int left, int right) {
 		Random r = new Random();
 		int index = left + r.nextInt() % ((right - left + 1) / 2) + (right - left + 1) / 2;
