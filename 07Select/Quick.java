@@ -136,7 +136,7 @@ public class Quick {
 	}
 
 	public static void quickSort(int[] data) {
-		quickSortOld(data, 0, data.length - 1);
+		quickSort(data, 0, data.length - 1);
 	}
 
 	public static void quickSort(int[] data, int left, int right) {
