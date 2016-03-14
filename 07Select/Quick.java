@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.Arrays;
+import java.util.Random;
+
 public class Quick {
 	public static String name() {
 		return "7,Hall-Pena,Matthew";
@@ -15,20 +17,14 @@ public class Quick {
 		s += "]";
 		System.out.println(s);
 	}
-    private static void fillRandom(int[] data) {
+
+	private static void fillRandom(int[] data) {
 		Random r = new Random();
 		for (int x = 0; x < data.length; x++) {
 			data[x] = r.nextInt();
 		}
 	}
-    private static boolean isSorted(int[] data){
-	for(int x=0;x<data.length-1;x++){
-		if(data[x]>data[x+1]){
-		    return false;
-		}
-	    }
-		return true;
-    }
+
 	private static void swap(int[] data, int a, int b) {
 		int old = data[a];
 		data[a] = data[b];
@@ -66,15 +62,16 @@ public class Quick {
 		}
 		return left;
 	}
-    private static int[] partition(int[] data, int left, int right) {
+
+	private static int[] partition(int[] data, int left, int right) {
 		int index = (int) (left + Math.random() * (right - left + 1));
 		int split = data[index];
-		int start=left;
+		int start = left;
 		int end = right;
 		swap(data, right, index);
 		right--;
 		while (left < right) {
-			if (data[left] >= split && data[right] <= split) {
+			if (data[left] > split && data[right] <= split) {
 				swap(data, right, left);
 				right--;
 			} else if (data[left] > split && data[right] > split) {
@@ -86,9 +83,26 @@ public class Quick {
 		if (data[left] > data[end]) {
 			swap(data, end, left);
 		}
-		for(start;start<
-			int[] index={left,right};
-		return left;
+		for (; start < left; start++) {
+			if (data[left] == split) {
+				left--;
+				start--;
+			} else if (data[start] == split) {
+				swap(data, start, left);
+				left--;
+			}
+		}
+		for (; end > right; end--) {
+			if (data[right] == split) {
+				right++;
+				end++;
+			} else if (data[end] == split) {
+				swap(data, end, right);
+				right++;
+			}
+		}
+		int[] ends = { left, right };
+		return ends;
 	}
 
 	public static int quickselect(int[] data, int k, int left, int right) {
@@ -120,7 +134,8 @@ public class Quick {
 			quickSortOld(data, index + 1, right);
 		}
 	}
-    public static void quickSort(int[] data) {
+
+	public static void quickSort(int[] data) {
 		quickSortOld(data, 0, data.length - 1);
 	}
 
@@ -131,14 +146,18 @@ public class Quick {
 			quickSort(data, index[1], right);
 		}
 	}
+
 	public static void main(String[] args) {
-	    int[] data = new int[Integer.parseInt(args[0])];
+		int[] data = new int[Integer.parseInt(args[0])];
 		fillRandom(data);
-		if(args[1]=="0"){
-		    quickSortOld(data);
+		if (args[1] == "0") {
+			quickSortOld(data);
 		}
-		if(args[1]=="2"){
-		    Arrays.sort(data);
+		if (args[1] == "1") {
+			quickSort(data);
+		}
+		if (args[1] == "2") {
+			Arrays.sort(data);
 		}
 	}
 }
