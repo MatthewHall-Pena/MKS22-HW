@@ -1,0 +1,16 @@
+public class MyLinkedList{
+    LNode start;
+    int size;
+    public int get(int index){
+	return get(index,start);
+    }
+    private int get(int index, LNode node){
+	if(index==0){
+	    return node.getValue();
+	}
+	return get(index-1,node.getNext());
+    }
+    public int set(int index,int newValue){
+	return set(index,newValue)
+    }
+}
