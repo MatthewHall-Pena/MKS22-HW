@@ -1,6 +1,35 @@
 public class MyLinkedList{
     private LNode start;
     private int size;
+    public MyLinkedList(){
+    }
+    public MyLinkedList(int nSize){
+	if(nSize>0){
+	    start=new LNode(0);
+	    constructor(nSize,start);
+	}
+    }
+    private void constructor(int nSize,LNode node){
+	if(nSize>0){
+	    LNode Node =new LNode(0);
+	    node.setNext(Node);
+	    constructor(nSize-1,Node);
+	}
+    }
+    public boolean add(int value){
+	if(start==null){
+	    start=new LNode(value);
+	    return true;
+	}
+	return add(value,start);
+    }
+    private boolean add(int value, LNode node){
+	if(node.getNext()==null){
+	    node.setValue(value);
+	    return true;
+	}
+	return get(value,node.getNext());
+    }
     public int get(int index){
 	return get(index,start);
     }
@@ -35,13 +64,14 @@ public class MyLinkedList{
 	return indexOf(index-1,value,node.getNext());
     }
     public String toString(){
-	return toString(size,start,"[")+" ]";
+	return toString(size,start,"[ ")+" ]";
     }
     private String toString(int index,LNode node,String s){
-	if(size==0){
+	if(index==1){
+	    s+=node.getValue();
 	    return s;
 	}
-	s+=" "+node.getValue();
+	s+=node.getValue()+", ";
 	toString(index-1,node.getNext(),s);
     }
 }
