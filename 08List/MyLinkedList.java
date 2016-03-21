@@ -1,47 +1,40 @@
-public class MyLinkedList {
-	private LNode start;
+public class MyLinkedList<T> {
+	private LNode<T> start;
 	private int size;
+        private LNode<T> end;
 
 	public MyLinkedList() {
-		size = 0;
 	}
 
-	public MyLinkedList(int nSize) {
+	public MyLinkedList(T nSize) {
 		if (nSize > 0) {
 			size = nSize;
-			start = new LNode(0);
+			start = new LNode<T>(0);
 			constructor(nSize, start);
 		}
 	}
 
-	private void constructor(int nSize, LNode node) {
+	private void constructor(int nSize, LNode<T> node) {
 		if (nSize > 0) {
-			LNode Node = new LNode(0);
+			LNode<T> Node = new LNode<T>(0);
 			node.setNext(Node);
 			constructor(nSize - 1, Node);
 		}
+		end=node;
 	}
 
-	public boolean add(int value) {
+	public boolean add(T value) {
 		if (start == null) {
-			start = new LNode(value);
+			start = new LNode<T>(value);
+			end=start;
 			size += 1;
 			return true;
 		}
-		return add(value, start);
+		end.setNext(new LNode<T>(value));
+		end=end.getNext();
+		return true;
 	}
-
-	private boolean add(int value, LNode node) {
-		if (node.getNext() == null) {
-			LNode nNode = new LNode(value);
-			node.setNext(nNode);
-			size += 1;
-			return true;
-		}
-		return add(value, node.getNext());
-	}
-
-	public boolean add(int index, int value) {
+	public boolean add(int index, T value) {
 		if (index > size || index < 0) {
 			return false;
 		}
@@ -51,9 +44,9 @@ public class MyLinkedList {
 		return add(index, value, start);
 	}
 
-	private boolean add(int index, int value, LNode node) {
+	private boolean add(int index, T value, LNode<T> node) {
 		if (index == 1) {
-			LNode nNode = new LNode(value, node.getNext());
+			LNode<T> nNode = new LNode<T>(value, node.getNext());
 			node.setNext(nNode);
 			size += 1;
 			return true;
@@ -68,7 +61,7 @@ public class MyLinkedList {
 		return remove(index, start);
 	}
 
-	private boolean remove(int index, LNode node) {
+	private boolean remove(int index, LNode<T> node) {
 		if (index == 1) {
 			node.setNext(node.getNext().getNext());
 			size -= 1;
@@ -77,22 +70,26 @@ public class MyLinkedList {
 		return remove(index - 1, node.getNext());
 	}
 
-	public int get(int index) {
+	public T get(int index) {
 		return get(index, start);
 	}
 
-	private int get(int index, LNode node) {
+	private T get(int index, LNode<T> node) {
 		if (index == 0) {
 			return node.getValue();
 		}
 		return get(index - 1, node.getNext());
 	}
 
-	public int set(int index, int newValue) {
+	public T set(int index, T newValue) {
+	    if(index==size-1){
+		return end.setValue(newValue);
+	    }
+
 		return set(index, newValue, start);
 	}
 
-	private int set(int index, int value, LNode node) {
+	private T set(int index, T value, LNode<T> node) {
 		if (index == 0) {
 			return node.setValue(value);
 		}
@@ -103,11 +100,11 @@ public class MyLinkedList {
 		return size;
 	}
 
-	public int indexOf(int value) {
+	public int indexOf(T value) {
 		return indexOf(size, value, start);
 	}
 
-	private int indexOf(int index, int value, LNode node) {
+	private int indexOf(int index, T value, LNode<T> node) {
 		if (index == 0) {
 			return -1;
 		}
@@ -117,12 +114,11 @@ public class MyLinkedList {
 		return indexOf(index - 1, value, node.getNext());
 	}
 
-	@Override
 	public String toString() {
 		return toString(size, start, "[ ") + " ]";
 	}
 
-	private String toString(int index, LNode node, String s) {
+	private String toString(int index, LNode<T> node, String s) {
 		if (index == 1) {
 			s += node.getValue();
 			return s;
