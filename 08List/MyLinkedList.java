@@ -1,22 +1,22 @@
 public class MyLinkedList<T> {
-	private LNode<T> start;
+	private LNode<T> start=null;
 	private int size;
-        private LNode<T> end;
+        private LNode<T> end=null;
 
 	public MyLinkedList() {
 	}
 
-	public MyLinkedList(T nSize) {
+	public MyLinkedList(int nSize) {
 		if (nSize > 0) {
 			size = nSize;
-			start = new LNode<T>(0);
+			start = new LNode<T>();
 			constructor(nSize, start);
 		}
 	}
 
 	private void constructor(int nSize, LNode<T> node) {
 		if (nSize > 0) {
-			LNode<T> Node = new LNode<T>(0);
+			LNode<T> Node = new LNode<T>();
 			node.setNext(Node);
 			constructor(nSize - 1, Node);
 		}
@@ -24,7 +24,7 @@ public class MyLinkedList<T> {
 	}
 
 	public boolean add(T value) {
-		if (start == null) {
+	    if (start==null) {
 			start = new LNode<T>(value);
 			end=start;
 			size += 1;
@@ -35,11 +35,16 @@ public class MyLinkedList<T> {
 		return true;
 	}
 	public boolean add(int index, T value) {
-		if (index > size || index < 0) {
-			return false;
-		}
+		if(index>size ||index<0){
+		throw new IndexOutOfBoundsException();
+	    }
 		if (index == size) {
 			return add(value);
+		}
+		if (index == 0) {
+		    LNode<T> nNode = new LNode<T>(value, start);
+		    start=nNode;
+		    return true;
 		}
 		return add(index, value, start);
 	}
@@ -55,8 +60,12 @@ public class MyLinkedList<T> {
 	}
 
 	public boolean remove(int index) {
-		if (index >= size || index < 0) {
-			return false;
+		if(index>=size ||index<0){
+		throw new IndexOutOfBoundsException();
+	    }
+		if(index==0){
+		    start=start.getNext();
+		    size-=1;
 		}
 		return remove(index, start);
 	}
@@ -71,6 +80,9 @@ public class MyLinkedList<T> {
 	}
 
 	public T get(int index) {
+	    if(index>=size ||index<0){
+		throw new IndexOutOfBoundsException();
+	    }
 		return get(index, start);
 	}
 
@@ -82,6 +94,9 @@ public class MyLinkedList<T> {
 	}
 
 	public T set(int index, T newValue) {
+	    if(index>=size ||index<0){
+		throw new IndexOutOfBoundsException();
+	    }
 	    if(index==size-1){
 		return end.setValue(newValue);
 	    }
@@ -108,7 +123,7 @@ public class MyLinkedList<T> {
 		if (index == 0) {
 			return -1;
 		}
-		if (node.getValue() == value) {
+		if (node.getValue().equals(value)) {
 			return size - index;
 		}
 		return indexOf(index - 1, value, node.getNext());

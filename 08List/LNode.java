@@ -1,7 +1,9 @@
 public class LNode<T> {
-	private T value;
-	private LNode next;
+	private T value=null;
+	private LNode next=null;
 
+	public LNode(){
+	}
 	public LNode(T nValue) {
 		value = nValue;
 	}
