@@ -1,7 +1,7 @@
 public class MyLinkedList<T> {
-	private LNode<T> start=null;
+	private LNode<T> start = null;
 	private int size;
-        private LNode<T> end=null;
+	private LNode<T> end = null;
 
 	public MyLinkedList() {
 	}
@@ -20,31 +20,34 @@ public class MyLinkedList<T> {
 			node.setNext(Node);
 			constructor(nSize - 1, Node);
 		}
-		end=node;
+		end = node;
 	}
 
 	public boolean add(T value) {
-	    if (start==null) {
+		if (start == null) {
 			start = new LNode<T>(value);
-			end=start;
+			end = start;
 			size += 1;
 			return true;
 		}
 		end.setNext(new LNode<T>(value));
-		end=end.getNext();
+		size += 1;
+		end = end.getNext();
 		return true;
 	}
+
 	public boolean add(int index, T value) {
-		if(index>size ||index<0){
-		throw new IndexOutOfBoundsException();
-	    }
+		if (index > size || index < 0) {
+			throw new IndexOutOfBoundsException();
+		}
 		if (index == size) {
 			return add(value);
 		}
 		if (index == 0) {
-		    LNode<T> nNode = new LNode<T>(value, start);
-		    start=nNode;
-		    return true;
+			LNode<T> nNode = new LNode<T>(value, start);
+			start = nNode;
+			size += 1;
+			return true;
 		}
 		return add(index, value, start);
 	}
@@ -59,30 +62,36 @@ public class MyLinkedList<T> {
 		return add(index - 1, value, node.getNext());
 	}
 
-	public boolean remove(int index) {
-		if(index>=size ||index<0){
-		throw new IndexOutOfBoundsException();
-	    }
-		if(index==0){
-		    start=start.getNext();
-		    size-=1;
+	public T remove(int index) {
+		if (index >= size || index < 0) {
+			throw new IndexOutOfBoundsException();
+		}
+		if (index == 0) {
+			T t = start.getValue();
+			start = start.getNext();
+			size -= 1;
+			return t;
 		}
 		return remove(index, start);
 	}
 
-	private boolean remove(int index, LNode<T> node) {
+	private T remove(int index, LNode<T> node) {
 		if (index == 1) {
+			if (node.getNext().getNext() == null) {
+				end = node;
+			}
+			T t = (T) node.getNext().getValue();
 			node.setNext(node.getNext().getNext());
 			size -= 1;
-			return true;
+			return t;
 		}
 		return remove(index - 1, node.getNext());
 	}
 
 	public T get(int index) {
-	    if(index>=size ||index<0){
-		throw new IndexOutOfBoundsException();
-	    }
+		if (index >= size || index < 0) {
+			throw new IndexOutOfBoundsException();
+		}
 		return get(index, start);
 	}
 
@@ -94,12 +103,12 @@ public class MyLinkedList<T> {
 	}
 
 	public T set(int index, T newValue) {
-	    if(index>=size ||index<0){
-		throw new IndexOutOfBoundsException();
-	    }
-	    if(index==size-1){
-		return end.setValue(newValue);
-	    }
+		if (index >= size || index < 0) {
+			throw new IndexOutOfBoundsException();
+		}
+		if (index == size - 1) {
+			return end.setValue(newValue);
+		}
 
 		return set(index, newValue, start);
 	}
@@ -129,6 +138,7 @@ public class MyLinkedList<T> {
 		return indexOf(index - 1, value, node.getNext());
 	}
 
+	@Override
 	public String toString() {
 		return toString(size, start, "[ ") + " ]";
 	}
