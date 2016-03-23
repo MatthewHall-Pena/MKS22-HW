@@ -1,4 +1,4 @@
-public class MyLinkedList<T> {
+public class MyLinkedList<T> implements Iterable<T>{
 	private LNode<T> start = null;
 	private int size;
 	private LNode<T> end = null;
@@ -151,4 +151,12 @@ public class MyLinkedList<T> {
 		s += node.getValue() + ", ";
 		return toString(index - 1, node.getNext(), s);
 	}
+	public Iterator<T> iterator(){
+	    return new ListIterator();
+	}
+
+	public class ListIterator implements Iterator<T>{
+	    LNode<T> current=start;
+	}
 }
+  
