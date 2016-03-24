@@ -1,3 +1,4 @@
+import java.util.*;
 public class MyLinkedList<T> implements Iterable<T>{
 	private LNode<T> start = null;
 	private int size;
@@ -155,8 +156,25 @@ public class MyLinkedList<T> implements Iterable<T>{
 	    return new ListIterator();
 	}
 
-	public class ListIterator implements Iterator<T>{
-	    LNode<T> current=start;
+	private class ListIterator implements Iterator<T>{
+	    private LNode<T> current;
+	    public ListIterator(){
+		current=start;
+	    }
+	    public boolean hasNext(){
+	        return current.getNext()!=null;
+	    }
+	    public T next(){
+		if(!hasNext()){
+		    throw new NoSuchElementException();
+		}
+		T value=current.getValue();
+		current=current.getNext();
+		return value;
+	    }
+	    public void remove(){
+		throw new UnsupportedOperationException();
+	    }
 	}
 }
   
