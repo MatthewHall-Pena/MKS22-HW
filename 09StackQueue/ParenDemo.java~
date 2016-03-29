@@ -1,0 +1,38 @@
+public class ParenDemo{
+    private static MyStack<char> stack =new MyStack<char>();
+    public static boolean isMatching(String s){
+	char[] chars=s.toCharArray();
+	for(int x=0;x<chars.length;x++){
+	    if(chars[x]=='('||chars[x]=='['||chars[x]=='{'){
+		stack.push(chars[x]);
+	    }
+	    if(match(stack.peek(),chars[x])){
+		stack.pop();
+	    }
+	}
+	    return stack.isEmpty();
+    }
+    private boolean match(char open,char close){
+	if(open=='('&&close==')'){
+	    return true;
+	}
+	if(open=='['&&close==']'){
+	    return true;
+	}
+	return open=='{'&&close=='}';
+	
+    }
+
+
+ public static void main(String[]args){
+     String input = "()()(([[]]))";
+ if(args.length > 0){
+    input = args[0];
+    System.out.println( isMatching(input)); 
+ }else{
+    System.out.println("Usage:"); 
+    System.out.println("java ParenDemo \"text\""); 
+ }
+ 
+ }
+}
