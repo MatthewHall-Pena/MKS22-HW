@@ -1,15 +1,14 @@
 public class ParenDemo{
     private static MyStack<Character> stack =new MyStack<Character>();
     public static boolean isMatching(String s){
-	char[] chars=s.toCharArray();
-	for(int x=0;x<chars.length;x++){
-	    if(chars[x]=='('||chars[x]=='['||chars[x]=='{'||chars[x]=='<'){
-		stack.push(chars[x]);
+	for(char chars : s.toCharArray()){
+	    if(chars=='('||chars=='['||chars=='{'||chars=='<'){
+		stack.push(chars);
 	    } 
-	    if(!stack.isEmpty() && match(stack.peek(),chars[x])){
+	    if(!stack.isEmpty() && match(stack.peek(),chars)){
 		stack.pop();
 	    }
-	    else if(chars[x]==')'||chars[x]==']'||chars[x]=='}'||chars[x]=='>'){
+	    else if(chars==')'||chars==']'||chars=='}'||chars=='>'){
 		return false;
 	    }
 	}
