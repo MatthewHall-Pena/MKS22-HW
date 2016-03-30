@@ -5,12 +5,15 @@ public class ParenDemo{
 	for(int x=0;x<chars.length;x++){
 	    if(chars[x]=='('||chars[x]=='['||chars[x]=='{'){
 		stack.push(chars[x]);
-	    }
+	    } 
 	    if(!stack.isEmpty() && match(stack.peek(),chars[x])){
 		stack.pop();
 	    }
+	    else if(chars[x]==')'||chars[x]==']'||chars[x]=='}'){
+		return false;
+	    }
 	}
-	    return stack.isEmpty();
+        return stack.isEmpty();
     }
     private static boolean match(char open,char close){
 	if(open=='('&&close==')'){
