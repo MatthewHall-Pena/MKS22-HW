@@ -3,13 +3,13 @@ public class ParenDemo{
     public static boolean isMatching(String s){
 	char[] chars=s.toCharArray();
 	for(int x=0;x<chars.length;x++){
-	    if(chars[x]=='('||chars[x]=='['||chars[x]=='{'){
+	    if(chars[x]=='('||chars[x]=='['||chars[x]=='{'||chars[x]=='<'){
 		stack.push(chars[x]);
 	    } 
 	    if(!stack.isEmpty() && match(stack.peek(),chars[x])){
 		stack.pop();
 	    }
-	    else if(chars[x]==')'||chars[x]==']'||chars[x]=='}'){
+	    else if(chars[x]==')'||chars[x]==']'||chars[x]=='}'||chars[x]=='>'){
 		return false;
 	    }
 	}
@@ -20,6 +20,9 @@ public class ParenDemo{
 	    return true;
 	}
 	if(open=='['&&close==']'){
+	    return true;
+	}
+	if(open=='<'&&close=='>'){
 	    return true;
 	}
 	return open=='{'&&close=='}';	
