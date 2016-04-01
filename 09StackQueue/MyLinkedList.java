@@ -5,6 +5,7 @@ public class MyLinkedList<T> implements Iterable<T> {
 	private class LNode {
 		private T value;
 		private LNode next;
+	        private LNode prev;
 
 		public LNode(T v) {
 			value = v;
@@ -17,7 +18,9 @@ public class MyLinkedList<T> implements Iterable<T> {
 		public LNode getNext() {
 			return next;
 		}
-
+	        public LNode getPrev() {
+			return prev;
+		}
 		public T setValue(T v) {
 			T old = value;
 			value = v;
@@ -27,7 +30,9 @@ public class MyLinkedList<T> implements Iterable<T> {
 		public void setNext(LNode n) {
 			next = n;
 		}
-
+	        public void setPrev(LNode n) {
+			prev = n;
+		}
 		@Override
 		public String toString() {
 			return value.toString();
@@ -85,7 +90,14 @@ public class MyLinkedList<T> implements Iterable<T> {
 	}
 
 	private LNode getNth(int index) {
-		// check bounds before calling this method!
+	    if(size/2<index){
+		LNode temp = end;
+		while (size-1 > index) {
+			temp = temp.getPrev();
+			index++;
+		}
+		return temp;
+	    }
 		LNode temp = start;
 		while (index > 0) {
 			temp = temp.getNext();
@@ -100,6 +112,7 @@ public class MyLinkedList<T> implements Iterable<T> {
 			end = start;
 		} else {
 			end.setNext(new LNode(value));
+			end.getNext().setPrev(end);
 			end = end.getNext();
 		}
 		size++;
@@ -118,14 +131,20 @@ public class MyLinkedList<T> implements Iterable<T> {
 			if (start == null) {
 				end = null;
 			}
+			else{
+			    start.setPrev(null);
+			}
 			return temp.getValue();
 		} else {
 			LNode p = getNth(index - 1);
 			temp = p.getNext();
+			p.setNext(p.getNext().getNext());
 			if (end == temp) {
 				end = p;
 			}
-			p.setNext(p.getNext().getNext());
+			else{
+			    p.getNext().setPrev(p);
+			}
 			size--;
 			return temp.getValue();
 		}
@@ -138,14 +157,20 @@ public class MyLinkedList<T> implements Iterable<T> {
 		LNode temp = new LNode(value);
 		if (index == 0) {
 			temp.setNext(start);
+			start.setPrev(temp);
 			start = temp;
 			if (size == 0) {
 				end = start;
 			}
-		} else {
-			LNode p = getNth(index - 1);
+		}
+		else{
+		    LNode p = getNth(index - 1);
+		    if(index!=size){
+			p.getNext().setPrev(temp);
+		    }
 			temp.setNext(p.getNext());
-			p.setNext(temp);
+			temp.setPrev(p);
+			p.setNext(temp);			
 			if (end.getNext() != null) {
 				end = end.getNext();
 			}
