@@ -10,11 +10,9 @@ public class MyLinkedList<T> implements Iterable<T> {
 		public LNode(T v) {
 			value = v;
 		}
-
 		public T getValue() {
 			return value;
 		}
-
 		public LNode getNext() {
 			return next;
 		}
@@ -26,7 +24,6 @@ public class MyLinkedList<T> implements Iterable<T> {
 			value = v;
 			return old;
 		}
-
 		public void setNext(LNode n) {
 			next = n;
 		}
@@ -38,11 +35,9 @@ public class MyLinkedList<T> implements Iterable<T> {
 			return value.toString();
 		}
 	}
-
 	LNode start;
 	LNode end;
 	int size;
-
 	@Override
 	public Iterator<T> iterator() {
 		// This uses an anonymous class! You don't need to know this.
