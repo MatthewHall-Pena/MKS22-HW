@@ -1,10 +1,10 @@
 import java.util.NoSuchElementException;
 
 public class MyDeque<T> {
-	T[] data;
-	int size = 0;
-	int start;
-	int end;
+	private T[] data;
+	private int size = 0;
+	private int start;
+	private int end;
 
 	@SuppressWarnings("unchecked")
 	public MyDeque() {
@@ -93,5 +93,21 @@ public class MyDeque<T> {
 			throw new NoSuchElementException();
 		}
 		return data[end];
+	}
+	
+	public int size(){
+	    return size;
+	}
+	public static void main(String[]args){
+	    MyDeque<Integer> d=new MyDeque();
+	    int length=30;
+	    for(int x=0;x<length;x++){
+		d.addFirst(x);
+	    }
+	    for(int x=0;x<d.size()+x;x++){
+		System.out.println(d.getFirst());
+		d.removeFirst();
+	    }
+	   
 	}
 }
