@@ -10,7 +10,7 @@ public class MyDeque<T> {
 	public MyDeque() {
 		data = (T[]) new Object[10];
 		start = data.length / 2;
-		end = start;
+		end = start + 0;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -20,11 +20,34 @@ public class MyDeque<T> {
 		end = start;
 	}
 
+	private void printArray(T[] data2) {
+		String s = "[ ";
+		for (int x = 0; x < data2.length; x++) {
+			s += data2[x];
+			if (x + 1 != data2.length) {
+				s += ", ";
+			}
+		}
+		s += "]";
+		System.out.println(s);
+	}
+
 	@SuppressWarnings("unchecked")
 	private void grow() {
 		T[] ndata = (T[]) new Object[data.length * 2];
-		for (int x = 0; x < size; x++) {
-			ndata[x + ndata.length - size] = data[x];
+		if (start == end) {
+			ndata[ndata.length / 2] = data[0];
+			start = ndata.length / 2;
+			end = ndata.length / 2;
+		} else if (start > end) {
+			int x;
+			for (x = 0; x < end + 1; x++) {
+				ndata[x] = data[x];
+			}
+			for (x = end + 1; x < size; x++) {
+				ndata[x + ndata.length - size] = data[x];
+			}
+			start = end + ndata.length - size + 1;
 		}
 		data = ndata;
 	}
@@ -33,7 +56,8 @@ public class MyDeque<T> {
 		if (size == data.length) {
 			grow();
 		}
-		if (start - 1 >= 0) {
+		if (start == end && size == 0) {
+		} else if (start - 1 >= 0) {
 			start -= 1;
 		} else {
 			start = data.length - 1;
@@ -94,20 +118,21 @@ public class MyDeque<T> {
 		}
 		return data[end];
 	}
-	
-	public int size(){
-	    return size;
+
+	public int size() {
+		return size;
 	}
-	public static void main(String[]args){
-	    MyDeque<Integer> d=new MyDeque();
-	    int length=30;
-	    for(int x=0;x<length;x++){
-		d.addFirst(x);
-	    }
-	    for(int x=0;x<d.size()+x;x++){
-		System.out.println(d.getFirst());
-		d.removeFirst();
-	    }
-	   
+
+	public static void main(String[] args) {
+		MyDeque<Integer> d = new MyDeque<Integer>();
+		int length = 50;
+		for (int x = 0; x < length; x++) {
+			d.addFirst(x);
+		}
+		for (int x = 0; x < d.size() + x; x++) {
+			System.out.println(d.getFirst());
+			d.removeFirst();
+		}
+
 	}
 }
