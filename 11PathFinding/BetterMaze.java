@@ -3,11 +3,6 @@ import java.io.*;
 
 public class BetterMaze{
     private class Node{
-	import java.util.*;
-import java.io.*;
-
-public class BetterMaze{
-    private class Node{
 	int r,c;
 	Node prev;
     
@@ -30,7 +25,7 @@ public class BetterMaze{
     private int      startRow,startCol;
     private Frontier<Node> frontier;
     private boolean  animate;//default to false
-    private Node solution;
+    private Node Solution;
    /**return a COPY of solution.
      *This should be : [x1,y1,x2,y2,x3,y3...]
      *the coordinates of the solution from start to end.
@@ -60,27 +55,30 @@ public class BetterMaze{
 	while(frontier.hasNext()){
 	    for(Node n:getNexts(frontier.next())){
 		if(maze[n.get()[0]][n.get()[1]]=='E'){
-		    solution=n;
+		    Solution=n;
 		    return true;
 		}
+		maze[n.get()[0]][n.get()[1]]='.';
+		frontier.add(n);
 	    }
 	}
 	return false;
     }    
-    private ArrayList getNexts(Node n,Node current){
-	ArrayList<Node> nexts=new ArrayList<Node>();
+    private LinkedList getNexts(Node n,Node current){
+	LinkedList<Node> nexts=new LinkedList<Node>();
 	int r=current.get()[0];
 	int c=current.get()[1];
 	for (int a = -1; a < 2; a++) {
 	     for (int b = -1; b < 2; b++) {
 		if (a != b && a != -b) {
-		    if(r+a>-1&&r+b>-1&&r+a<maze.length&&r+b<maze[0].length&&maze[r+a][c+b]!='#'&&maze[r+a][c+b]!='.'){
+		    if(r+a>-1&&r+b>-1&&r+a<maze.length&&r+b<maze[0].length&&maze[r+a][c+b]!='#'&&maze[r+a][c+b]!='.'&&maze[r+a][c+b]!='S'){
 			nexts.add(new Node(r+a,r+b,current));
 		    }
 		}
 
 	     }
 	}
+	return nexts;
     }
 
     public void setAnimate(boolean b){  
@@ -174,4 +172,4 @@ public class BetterMaze{
 	    return ans + color(37,40) + "\n";
 	}
     } 
-    
+} 
