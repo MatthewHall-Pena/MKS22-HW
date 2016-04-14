@@ -1,32 +1,20 @@
-import java.util.NoSuchElementException;
+import java.util.LinkedList;
 
-public class FrontierStack<T> extends MyLinkedList<T> implements Frontier<T> {
-	private LNode current = end;
+public class FrontierStack<T> extends LinkedList<T> implements Frontier<T> {
 
 	@Override
 	public boolean add(T element) {
-		if (super.add(0, element)) {
-			current = end;
-			return true;
-		}
-		return false;
-
+		super.addFirst(element);
+		return true;
 	}
 
 	@Override
 	public boolean hasNext() {
-		return current != null;
+		return super.peekFirst() != null;
 	}
 
 	@Override
 	public T next() {
-		if (!hasNext()) {
-			throw new NoSuchElementException();
-		}
-		T value = current.getValue();
-		current = current.getPrev();
-		remove(size() - 1);
-		return value;
+		return removeFirst();
 	}
-
 }
