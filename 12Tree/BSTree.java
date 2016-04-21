@@ -1,29 +1,49 @@
 
 public class BSTree<T extends comparable<T>>{
     private class Node{
- T data;
- Node left;
- Node right;
- // set/get: data/left/right
+	T data;
+	Node left;
+	Node right;
 
-
- //real methods here
- public int getHeight(){
-	    int r=right.getHeight();
-	    int l=left.getHeight();
+	public int getHeight(){
+	    int r;
+	    int l;
+	    if(!right.equals(null)){
+		r=right.getHeight();
+	    }
+	    if(!left.equals(null)){
+		l=left.getHeight();
+	    }	    
 	    if(r>=l){
 		return r+1;
 	    }
 	    return l+1;
 	}
- public void add(T value){
- }
- public String toString(){
-    return "";
- }
- public boolean contains(T value){
-    return false;
- }
+	public void add(T value){
+	    
+	}
+	public String toString(){
+	    if(!left.equals(null) &&!right.equals(null)){
+		return ""+data+left.toString()+right.toString();
+	    }
+	    if(left.equals(null)l &&!right.equals(null)){
+		return ""+data+"_"+right.toString();
+	    }
+	    if(!left.equals(null)l &&right.equals(null)){
+		return ""+data+left.toString()+"_";
+	    }
+	    return ""+data+"_"+"_";
+	}
+	public boolean contains(T value){
+	    if(!left.equals(null) &&left.data.compareTo(T)==0 ||right.data.compareTo(T)==0){
+		return true;
+	    }
+	    else if(left.data.compareTo(T)<0){
+		return left.contains(value);
+	    }
+	    
+	    return false;
+	}
     
     }
 
