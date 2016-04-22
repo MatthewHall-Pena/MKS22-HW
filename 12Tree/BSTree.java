@@ -1,13 +1,17 @@
 
-public class BSTree<T extends comparable<T>>{
+public class BSTree<T extends Comparable<T>>{
     private class Node{
 	T data;
 	Node left;
 	Node right;
-
+	
+	public Node(T value){
+	    data=value;
+	}
+	
 	public int getHeight(){
-	    int r;
-	    int l;
+	    int r=0;
+	    int l=0;
 	    if(!right.equals(null)){
 		r=right.getHeight();
 	    }
@@ -20,28 +24,50 @@ public class BSTree<T extends comparable<T>>{
 	    return l+1;
 	}
 	public void add(T value){
+	    if(data.compareTo(value)>0){
+		if(right.equals(null)){
+		    right=new Node(value);
+		}
+		else{
+		    right.add(value);
+		}
+	    }
+	    else{
+		if(left.equals(null)){
+		    left=new Node(value);
+		}
+		else{
+		    left.add(value);
+		}
+	    }
+	   
 	    
 	}
 	public String toString(){
 	    if(!left.equals(null) &&!right.equals(null)){
 		return ""+data+left.toString()+right.toString();
 	    }
-	    if(left.equals(null)l &&!right.equals(null)){
+	    if(left.equals(null) &&!right.equals(null)){
 		return ""+data+"_"+right.toString();
 	    }
-	    if(!left.equals(null)l &&right.equals(null)){
+	    if(!left.equals(null) &&right.equals(null)){
 		return ""+data+left.toString()+"_";
 	    }
 	    return ""+data+"_"+"_";
 	}
 	public boolean contains(T value){
-	    if(!left.equals(null) &&left.data.compareTo(T)==0 ||right.data.compareTo(T)==0){
+	    if(data.compareTo(value)!=0&&left.equals(null)&&right.equals(null)){
+		return false;
+	    }
+	    else if((!left.equals(null) &&left.data.compareTo(value)==0) ||(!right.equals(null)&& right.data.compareTo(value)==0)){
 		return true;
 	    }
-	    else if(left.data.compareTo(T)<0){
+	    else if((right.equals(null)&&!left.equals(null))|| right.data.compareTo(value)>0){
 		return left.contains(value);
 	    }
-	    
+	    else if((!right.equals(null)&&left.equals(null))|| left.data.compareTo(value)<0){
+		return right.contains(value);
+	    }
 	    return false;
 	}
     
@@ -49,22 +75,28 @@ public class BSTree<T extends comparable<T>>{
 
     private Node root;
 
-    //OUTER methods here are wrapper methods for the root
-    public getHeight(){
- //call the root's methods
- //check for empty first!
- return root.height();
+    public int getHeight(){
+	return root.getHeight();
     }
 
     public void add(T value){
- //check for empty before you do things with root.
+	if(root.equals(null)){
+	    root=new Node(value);
+	}
+	else{
+	    root.add(value);
+	}
     }
     public String toString(){
- //check for empty before you do things with root.
- return "";
+	if(root.equals(null)){
+	    return "";
+	}
+	return root.toString();
     }
     public boolean contains(T value){
- //check for empty before you do things with root.
- return false;
+	if(root.equals(null)){
+	    return false;
+	}
+	return root.contains(value);
     }
 }
