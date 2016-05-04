@@ -70,6 +70,28 @@ public class BSTree<T extends Comparable<T>>{
 	    }
 	    return false;
 	}
+	public T remove(T value){
+	    if(data.compareTo(value)==0){
+		int temp =data;
+		if(!right.equals(null)&&left.equals(null)||right.getHeight()>=left.getHeight()){
+		    data=right.data;
+		    right.remove(right.data);
+		    return temp;
+		}
+		data=left.data;
+		left.remove(left.data);
+		return temp;
+	    }
+	    else if(data.compareTo(value)!=0&&left.equals(null)&&right.equals(null)){
+		throw new NoSuchElementException();
+	    }
+	    else if((right.equals(null)&&!left.equals(null))||left.data.compareTo(value)==0|| right.data.compareTo(value)>0){
+		return left.remove(value);
+	    }
+	    else if((!right.equals(null)&&left.equals(null))||right.data.compareTo(value)==0|| left.data.compareTo(value)<0){
+		return right.remove(value);
+	    }
+	    throw new NoSuchElementException();
     
     }
 
