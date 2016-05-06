@@ -16,11 +16,29 @@ public class MyHeap<T extends Comparable<T>>
        data=(T)data;
        Object.arraycopy(array,0,data,0,array.length);
    }
-   private void pushDown(int k){
-       
+   private void swap(int k,int n){
+       T temp=data[k];
+       data[k]=data[n];
+       data[n]=temp;
    }
-   private void pushUp(int k){
-       
+   private void down(int k){
+       if(k*2<data.length){
+	   if(data[k*2]>data[k]&&(k*2+1>=data.length||data[k*2]>data[k*2+1])){
+	       swap(k,k*2);
+	       down(k*2);
+	   }
+	   else if(k*2+1>=data.length&&(data[k*2+1]>data[k]&&data[k*2+1]>data[k*2])){
+	       swap(k,k*2+1);
+	       down(k*2+1);
+	   }
+
+       }
+   }
+   private void up(int k){
+       if(k/2>=0&&data[k/2]<data[k]){
+	   swap(k,k/2);
+	   up(k/2);
+       }
    }
    private void heapify(){
    }
