@@ -63,7 +63,8 @@ public class MyHeap<T extends Comparable<T>> {
 	}
 
 	private void heapify() {
-		for (int x = size - 1; x >= 0; x--) {
+		int run = (int) (Math.pow(2, (int) (Math.log(size) / Math.log(2)))) - 2;
+		for (int x = run; x >= 0; x--) {
 			down(x);
 		}
 	}
