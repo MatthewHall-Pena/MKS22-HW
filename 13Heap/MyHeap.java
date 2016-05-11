@@ -1,3 +1,4 @@
+import java.util.NoSuchElementException;
 
 @SuppressWarnings("unchecked")
 public class MyHeap<T extends Comparable<T>> {
@@ -12,8 +13,8 @@ public class MyHeap<T extends Comparable<T>> {
 
 	public MyHeap(T[] array) {
 		size = array.length;
-		data = (T[]) new Comparable[array.length];
-		System.arraycopy(array, 0, data, 0, array.length);
+		data = (T[]) new Comparable[array.length + 1];
+		System.arraycopy(array, 0, data, 1, array.length);
 		heapify();
 	}
 
@@ -30,8 +31,8 @@ public class MyHeap<T extends Comparable<T>> {
 			max = -1;
 		}
 		size = array.length;
-		data = (T[]) new Comparable[array.length];
-		System.arraycopy(array, 0, data, 0, array.length);
+		data = (T[]) new Comparable[array.length + 1];
+		System.arraycopy(array, 0, data, 1, array.length);
 		heapify();
 	}
 
@@ -42,12 +43,12 @@ public class MyHeap<T extends Comparable<T>> {
 	}
 
 	private void down(int k) {
-		if (k * 2 < size) {
+		if (k * 2 <= size) {
 			if (data[k * 2].compareTo(data[k]) * max > 0
-					&& (k * 2 + 1 >= size || data[k * 2].compareTo(data[k * 2 + 1]) * max > 0)) {
+					&& (k * 2 + 1 > size || data[k * 2].compareTo(data[k * 2 + 1]) * max > 0)) {
 				swap(k, k * 2);
 				down(k * 2);
-			} else if (k * 2 + 1 < size && (data[k * 2 + 1].compareTo(data[k]) * max > 0)) {
+			} else if (k * 2 + 1 <= size && (data[k * 2 + 1].compareTo(data[k]) * max > 0)) {
 				swap(k, k * 2 + 1);
 				down(k * 2 + 1);
 			}
@@ -56,7 +57,7 @@ public class MyHeap<T extends Comparable<T>> {
 	}
 
 	private void up(int k) {
-		if (k / 2 >= 0 && data[k / 2].compareTo(data[k]) * max < 0) {
+		if (k / 2 > 0 && data[k / 2].compareTo(data[k]) * max < 0) {
 			swap(k, k / 2);
 			up(k / 2);
 		}
@@ -71,41 +72,44 @@ public class MyHeap<T extends Comparable<T>> {
 
 	private int indexOf(T elem, int index) {
 		int loc = -1;
-		if (index >= size || elem.compareTo(data[index]) * max > 0) {
+
+		if (index > size || elem.compareTo(data[index]) * max > 0) {
 			return -1;
 		}
 		if (elem.compareTo(data[index]) * max == 0) {
-			return loc;
+			return index;
 		}
-		if (index * 2 < size && elem.compareTo(data[index * 2]) * max <= 0) {
+		if (index * 2 <= size && elem.compareTo(data[index * 2]) * max <= 0) {
 			loc = indexOf(elem, index * 2);
 			if (loc != -1) {
 				return loc;
 			}
 		}
-		if (index * 2 + 1 < size && elem.compareTo(data[index * 2 + 1]) * max <= 0) {
+		if (index * 2 + 1 <= size && elem.compareTo(data[index * 2 + 1]) * max <= 0) {
 			loc = indexOf(elem, index * 2 + 1);
 			if (loc != -1) {
 				return loc;
 			}
 		}
-		return -1;
+		return loc;
 	}
 
 	private T delete(T x, int loc) {
 		int index = indexOf(x, loc);
-		if (index * 2 > size) {
-			for (int y = index; y < size - 1; y++) {
+		if (index == -1) {
+			throw new NoSuchElementException();
+		} else if (index * 2 >= size) {
+			for (int y = index; y <= size - 1; y++) {
 				swap(y, y + 1);
 			}
-			for (int y = index; y < size - 1; y++) {
+			for (int y = index; y <= size - 1; y++) {
 				up(y);
 			}
-		} else if (index * 2 < size
-				&& (index * 2 + 1 > size || data[index * 2].compareTo(data[index * 2 + 1]) * max > 0)) {
+		} else if (index * 2 <= size
+				&& (index * 2 + 1 >= size || data[index * 2].compareTo(data[index * 2 + 1]) * max > 0)) {
 			swap(index, index * 2);
 			return delete(x, index * 2);
-		} else if (index * 2 + 1 < size && data[index * 2 + 1].compareTo(data[index * 2]) * max > 0) {
+		} else if (index * 2 + 1 <= size && data[index * 2 + 1].compareTo(data[index * 2]) * max > 0) {
 			swap(index, index * 2 + 1);
 			return delete(x, index * 2 + 1);
 		}
@@ -114,34 +118,48 @@ public class MyHeap<T extends Comparable<T>> {
 	}
 
 	public T delete(T x) {
-		return delete(x, 0);
+		if (size < 1) {
+			throw new NoSuchElementException();
+		}
+		return delete(x, 1);
 	}
 
 	public void add(T n) {
-		if (size == data.length) {
+		if (size == data.length - 1) {
 			grow();
 		}
-		data[size] = n;
+		data[size + 1] = n;
 		size += 1;
-		up(size - 1);
+		up(size);
 	}
 
 	private void grow() {
 		T[] ndata = (T[]) new Comparable[data.length * 2];
-		for (int x = 0; x < data.length; x++) {
+		for (int x = 1; x < data.length; x++) {
 			ndata[x] = data[x];
 		}
 		data = ndata;
 
 	}
 
+	public T peek() {
+		if (size < 1) {
+			throw new NoSuchElementException();
+		}
+		return data[1];
+	}
+
+	public int size() {
+		return size;
+	}
+
 	@Override
 	public String toString() {
 		String str = "[ ";
-		for (int x = 0; x < size - 1; x++) {
+		for (int x = 1; x < size; x++) {
 			str += data[x] + ", ";
 		}
-		str += data[size - 1] + "]";
+		str += data[size] + "]";
 		return str;
 	}
 
